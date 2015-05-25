@@ -31,7 +31,7 @@ var gulp = require('gulp'),
     jiraTodo = require('gulp-jira-todo');
 
 gulp.task('todo', function () {
-    gulp.src('mySources/**/*.js')
+    return gulp.src('mySources/**/*.js')
         .pipe(todo())
         .pipe(jiraTodo({
             issueRequired: true,
