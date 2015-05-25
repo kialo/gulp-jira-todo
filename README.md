@@ -2,7 +2,7 @@
 [![Dependency Status](https://david-dm.org/pharb/gulp-jira-todo.svg?style=flat-square)](https://david-dm.org/pharb/gulp-jira-todo)
 [![devDependency Status](https://david-dm.org/pharb/gulp-jira-todo/dev-status.svg?style=flat-square)](https://david-dm.org/pharb/gulp-jira-todo#info=devDependencies)
 
-# gulp-jira-todo 1.0.0
+# gulp-jira-todo
 
 > Check your JavaScript source files for comments containing TODOs that reference Jira issues. Causes warnings if the status of a referenced issue is "Open" (or any other number of configurable statuses).
 
@@ -107,6 +107,7 @@ Also, make sure you use a secure connection (i.e. https) to protect your usernam
 In lieu of a formal style guide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+ * 2015-05-25   v1.0.1   Fix callback parameters.
  * 2015-05-25   v1.0.0   Fork to switch support to gulp. Require external TODO parser.
  * 2015-03-20   v0.3.1   Maintenance release.  
  * 2015-02-09   v0.3.0   Added `allowedIssueTypes` option.  
