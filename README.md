@@ -1,44 +1,47 @@
-[![NPM version](http://img.shields.io/npm/v/grunt-jira-todo.svg?style=flat-square)](http://badge.fury.io/js/grunt-jira-todo)
-[![Dependency Status](https://david-dm.org/pigulla/grunt-jira-todo.svg?style=flat-square)](https://david-dm.org/pigulla/grunt-jira-todo)
-[![devDependency Status](https://david-dm.org/pigulla/grunt-jira-todo/dev-status.svg?style=flat-square)](https://david-dm.org/pigulla/grunt-jira-todo#info=devDependencies)
+[![NPM version](http://img.shields.io/npm/v/gulp-jira-todo.svg?style=flat-square)](http://badge.fury.io/js/gulp-jira-todo)
+[![Dependency Status](https://david-dm.org/pharb/gulp-jira-todo.svg?style=flat-square)](https://david-dm.org/pharb/gulp-jira-todo)
+[![devDependency Status](https://david-dm.org/pharb/gulp-jira-todo/dev-status.svg?style=flat-square)](https://david-dm.org/pharb/gulp-jira-todo#info=devDependencies)
 
-# grunt-jira-todo 0.3.1
+# gulp-jira-todo 1.0.0
 
 > Check your JavaScript source files for comments containing TODOs that reference Jira issues. Causes warnings if the status of a referenced issue is "Open" (or any other number of configurable statuses).
 
 ## Example Output
-![Example Output](https://raw.githubusercontent.com/pigulla/grunt-jira-todo/master/screenshot.png)
+![Example Output](https://raw.githubusercontent.com/pharb/gulp-jira-todo/master/screenshot.png)
 
 ## Getting Started
-This plugin requires Grunt `~0.4.0`
+This package is intended to be used with [gulp](https://github.com/gulpjs/gulp).
 
-If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
+Install it with:
+```shell
+npm install gulp-jira-todo --save-dev
+```
+
+You also need an external TODO parser like [gulp-todo](https://github.com/pgilad/gulp-todo):
 
 ```shell
-npm install grunt-jira-todo --save-dev
+npm install gulp-todo --save-dev
 ```
 
-Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
+You can integrate it in your gulp setup like this:
 
 ```js
-grunt.loadNpmTasks('grunt-jira-todo');
-```
+var gulp = require('gulp'),
+    todo = require('gulp-todo'),
+    jiraTodo = require('gulp-jira-todo');
 
-## The "jira-todo" task
-
-### Overview
-In your project's Gruntfile, add a section named `jira-todo` to the data object passed into `grunt.initConfig()`.
-
-```js
-grunt.initConfig({
-  'jira-todo': {
-    options: {
-      // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
+gulp.task('todo', function () {
+    gulp.src('mySources/**/*.js')
+        .pipe(todo())
+        .pipe(jiraTodo({
+            issueRequired: true,
+            projects: ['ABC'],
+            allowedStatuses: [1, 3],
+            allowedIssueTypes: [1, 3, 4, 5],
+            jiraUrl: 'https://jira.example.com',
+            jiraUsername: 'myJiraAccount',
+            jiraPassword: 'secretJiraPassword' // (see Security Notes below!)
+        }));
 });
 ```
 
@@ -74,12 +77,6 @@ Default value: `'(?<key>(?<project>[A-Z][_A-Z0-9]*)-(?<number>\\d+))'`
 
 The regular expression used to identify issue keys. By default this plugin matches strings that starts with a letter, followed by any number of alphanumeric characters, a dash and at least one digit (ignoring case). You can tweak this expression as needed, as long as you keep the named groups `key`, `project` and `number`.  The flags `g` (global) and `i` (ignore case) are added automatically. Please refer to the [XRegExp](http://xregexp.com/) documentation for further details.
 
-#### options.todoRegex
-Type: `String`  
-Default value: `'(?:\\*|\\s)(todo|fixme)(?:!|:|\\s)(?<text>.+)'`
-
-The regular expression used to find lines that potentially contain issue keys to check. By default this plugin matches anything that is preceded by either `"todo"` or `"fixme"` (ignoring case) followed by a colon, whitespace or exclamation mark. You can tweak this expression as needed, as long as you keep the named group `text`. The flags `g` (global) and `i` (ignore case) are added automatically. Please refer to the [XRegExp](http://xregexp.com/) documentation for further details.
-
 #### options.jiraUrl
 Type: `String`  
 Default value: _none_
@@ -98,49 +95,19 @@ Default value: _none_
 
 The password used for HTTP basic access authentication.
 
-### Usage Examples
-```js
-'jira-todo': {
-    source: {
-        options: {
-            projects: ['PM'],
-            allowedStatuses: [1, 3, 10023, 10024],
-            jiraUrl: 'https://jira.example.com',
-            jiraUsername: 'myusername',
-            jiraPassword: 'mypassword' // (see Security Notes below!)
-        },
-        src: ['src/**/*.js']
-    }
-}
-```
 
 ## Security Notes
-It is strongly recommended not to put your Jira credentials in the Gruntfile. Instead, create a separate JSON file, add it to your `.gitignore` and read the username and password from there:
+It is strongly recommended not to put your Jira credentials in your repository. Instead, create a separate JSON file, add it to your `.gitignore` and read the username and password from there.
 
-```js
-grunt.initConfig({
-    jiraConfig: grunt.file.readJSON('jira-config.json'),
-    // ...
-    'jira-todo': {
-        source: {
-            options: {
-                projects: ['ABC', 'DEF'],
-                allowedStatuses: [1, 3],
-                jiraUrl: 'https://jira.example.com',  // you may even want to hide that as well
-                jiraUsername: '<%= jiraConfig.username %>',
-                jiraPassword: '<%= jiraConfig.password %>'
-            },
-            src: ['src/**/*.js']
-        }
-    }
-});
-```
+For help, please read this: https://help.github.com/articles/remove-sensitive-data/
+
 Also, make sure you use a secure connection (i.e. https) to protect your username and password.  
 
 ## Contributing
 In lieu of a formal style guide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+ * 2015-05-25   v1.0.0   Fork to switch support to gulp. Require external TODO parser.
  * 2015-03-20   v0.3.1   Maintenance release.  
  * 2015-02-09   v0.3.0   Added `allowedIssueTypes` option.  
  * 2015-02-05   v0.2.1   Maintenance release.  
