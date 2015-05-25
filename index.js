@@ -100,7 +100,7 @@ module.exports = function (options) {
                 }
             });
 
-            cb();
+            cb(null, input);
         });
     });
 };
