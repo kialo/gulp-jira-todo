@@ -1,5 +1,9 @@
 # Changelog
 
+#### v1.0.0 (2015-05-25)
+ - Fork to support gulp instead of grunt
+ - Remove TODO parsing and rely on external TODO parser
+
 #### v0.3.1 (2014-03-20)
  - maintenance release
 

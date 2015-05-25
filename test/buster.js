@@ -1,6 +1,6 @@
 var config = module.exports;
 
-config['grunt-jira-todo'] = {
+config['gulp-jira-todo'] = {
     rootPath: '.',
     environment: 'node',
     sources: [

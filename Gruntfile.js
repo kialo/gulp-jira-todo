@@ -11,12 +11,11 @@
 module.exports = function (grunt) {
     // Project configuration.
     grunt.initConfig({
-        jiraConfig: grunt.file.readJSON('jira-config.example.json'),
-
         jshint: {
             all: [
                 'Gruntfile.js',
-                'tasks/**/*.js',
+                'index.js',
+                'lib/**/*.js',
                 'test/**/*.js'
             ],
             options: {
@@ -30,23 +29,8 @@ module.exports = function (grunt) {
                     config: 'test/buster.js'
                 }
             }
-        },
-
-        'jira-todo': {
-            project: {
-                options: {
-                    projects: ['ABC'],
-                    allowedStatuses: [1, 3],
-                    jiraUrl: '<%= jiraConfig.url %>',
-                    jiraUsername: '<%= jiraConfig.username %>',
-                    jiraPassword: '<%= jiraConfig.password %>'
-                },
-                src: ['test/fixtures/testing.js']
-            }
         }
     });
-
-    grunt.loadTasks('tasks');
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-buster');
