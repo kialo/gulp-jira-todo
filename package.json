@@ -1,24 +1,24 @@
 {
-  "name": "grunt-jira-todo",
+  "name": "gulp-jira-todo",
   "description": "Check statuses of TODOs referencing Jira tasks.",
-  "version": "0.3.1",
-  "homepage": "https://github.com/pigulla/grunt-jira-todo",
+  "version": "1.0.0",
+  "homepage": "https://github.com/pharb/gulp-jira-todo",
   "author": {
-    "name": "Raphael Pigulla",
-    "email": "pigulla@four66.com",
-    "url": "http://www.n3rd.org"
+    "name": "Patrick H.",
+    "email": "pharb1337@gmail.com",
+    "url": "https://github.com/pharb"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pigulla/grunt-jira-todo.git"
+    "url": "https://github.com/pharb/gulp-jira-todo.git"
   },
   "bugs": {
-    "url": "https://github.com/pigulla/grunt-jira-todo/issues"
+    "url": "https://github.com/pharb/gulp-jira-todo/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/pigulla/grunt-jira-todo/blob/master/LICENSE-MIT"
+      "url": "https://github.com/pharb/gulp-jira-todo/blob/master/LICENSE-MIT"
     }
   ],
   "engines": {
@@ -28,22 +28,24 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "async": "^0.9.0",
+    "async": "^1.0.0",
     "gulp-util": "^3.0.4",
-    "lodash": "^3.1.0",
-    "request": "^2.53.0",
+    "lodash": "^3.9.2",
+    "request": "^2.55.0",
     "xregexp": "^2.0.0"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-buster": "^0.3.2",
-    "grunt-contrib-jshint": "^0.11.0",
-    "nock": "^1.2.0",
-    "through2": "^0.6.5"
+    "grunt-contrib-jshint": "^0.11.2",
+    "nock": "^2.2.0",
+    "through2": "^1.1.1"
   },
   "keywords": [
+    "gulp",
+    "gulpplugin",
     "jira",
     "fixme",
-    "todos"
+    "todo"
   ]
 }
