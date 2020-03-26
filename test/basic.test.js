@@ -93,7 +93,7 @@ describe('gulp-jira-todo', function () {
         });
     });
 
-    it('generates the right requests', function (done) {
+    it('generates the right requests', function () {
         var authHeader = 'Basic ' + Buffer.from('jiraUser:jiraPass').toString('base64'),
             gjt = new JiraTodo({
                 projects: ['ABC'],
@@ -116,17 +116,16 @@ describe('gulp-jira-todo', function () {
                 issuetype: { id: '1', name: 'Bug' } }
             });
 
-        gjt.getJiraStatusForIssues(['ABC-99', 'XY-42', 'ABC-99'], function (err, result) {
-            expect(err).toBe(null);
-            expect(result).toEqual({
-                'ABC-99': { id: 1, type: 1, statusName: 'Open', typeName: 'Bug' },
-                'XY-42': { id: 3, type: 1, statusName: 'In Progress', typeName: 'Bug' }
+        return gjt.getJiraStatusForIssues(['ABC-99', 'XY-42', 'ABC-99'])
+            .then(function (result) {
+                expect(result).toEqual({
+                    'ABC-99': { id: 1, type: 1, statusName: 'Open', typeName: 'Bug' },
+                    'XY-42': { id: 3, type: 1, statusName: 'In Progress', typeName: 'Bug' }
+                });
             });
-            done();
-        });
     });
 
-    it('reports problems correctly', function (done) {
+    it('reports problems correctly', function () {
         var gjt = new JiraTodo({
             projects: ['ABC'],
             allowedStatuses: [1],
@@ -152,7 +151,7 @@ describe('gulp-jira-todo', function () {
                 issuetype: { id: '2', name: 'Bug' }
             }});
 
-        gjt.processTODOs(fixtures, function (problems) {
+        return gjt.processTODOs(fixtures).then(function (problems) {
             expect(problems).toEqual([{
                 kind: 'withoutTicket',
                 issue: {
@@ -190,7 +189,6 @@ describe('gulp-jira-todo', function () {
                     typeName: 'Bug'
                 }
             }]);
-            done();
         });
     });
 });
