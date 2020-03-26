@@ -1,11 +1,6 @@
-var buster = require('buster'),
-    path = require('path'),
-    nock = require('nock'),
+var nock = require('nock'),
     fixtures = require('./fixtures/testing'),
     JiraTodo = require('../lib/jira-todo-lib');
-
-buster.spec.expose();
-expect = buster.expect;
 
 describe('gulp-jira-todo', function () {
     it('extracts issues for a custom regex', function () {
@@ -54,7 +49,7 @@ describe('gulp-jira-todo', function () {
                 }),
                 issues = gjt.getIssuesForTodo(fixtures[0]);
 
-            expect(issues).toMatch({
+            expect(issues).toEqual({
                 withoutTicket: [],
                 issues: [{
                     key: 'PM-1234',
@@ -78,7 +73,7 @@ describe('gulp-jira-todo', function () {
                 }),
                 issues = gjt.getIssuesForTodo(fixtures[3]);
 
-            expect(issues).toMatch({
+            expect(issues).toEqual({
                 withoutTicket: [],
                 issues: [{
                     key: 'PM-1245',
@@ -99,7 +94,7 @@ describe('gulp-jira-todo', function () {
     });
 
     it('generates the right requests', function (done) {
-        var authHeader = 'Basic ' + new Buffer('jiraUser:jiraPass').toString('base64'),
+        var authHeader = 'Basic ' + Buffer.from('jiraUser:jiraPass').toString('base64'),
             gjt = new JiraTodo({
                 projects: ['ABC'],
                 jira: {
@@ -158,7 +153,7 @@ describe('gulp-jira-todo', function () {
             }});
 
         gjt.processTODOs(fixtures, function (problems) {
-            expect(problems).toMatch([{
+            expect(problems).toEqual([{
                 kind: 'withoutTicket',
                 issue: {
                     file: 'test/file1.less',
